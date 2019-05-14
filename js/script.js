@@ -6,6 +6,7 @@ var movies = [
     directors: ["Frank Darabont"],
     bio: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
     length: 142,
+    genre: ["drama"],
     poster: "shawshank.jpg"
   },
   {
@@ -15,6 +16,7 @@ var movies = [
     directors: ["Francis Ford Coppola"],
     bio: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
     length: 175,
+    genre: ["crime","drama"],
     poster: "thegodfather.jpg"
   },
   {
@@ -24,6 +26,7 @@ var movies = [
     directors: ["Christopher Nolan"],
     bio:"When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
     length: 152,
+    genre: ["drama"],
     poster: "thedarkknight.jpg"
   },
   {
@@ -33,6 +36,7 @@ var movies = [
     directors: ["Steven Spielberg"],
     bio: "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis",
     length: 195,
+    genre: ["drama"],
     poster: "schindlerslist.jpg"
   },
   {
@@ -42,6 +46,7 @@ var movies = [
     directors: ["Quentin Tarantino"],
     bio:"The lives of two mob hitmen, a boxer, a gangster & his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
     length:195,
+    genre: ["crime"],
     poster: "pulpfiction.jpg"
   }
 ]
@@ -64,53 +69,80 @@ for (var i = 0; i < movies.length; i++) {
   // moviesList.innerHTML +=  '</div>';
 
 // Way #2
-// var movieCard = '<div class="col-12 col-sm-6 col-md-4">';
-//   movieCard += '<div class="card">';
-//     movieCard += '<div class="card-body">';
-//       movieCard += '<h5 class="card-title">'+movie.title+'</h5>';
-//     movieCard += '</div>';
-//   movieCard += '</div>';
-// movieCard += '</div>';
+var genreClass= '';
+if (movie.genre[0] === 'drama') {
+  genreClass = 'border-primary';
+} else{
+  genreClass = 'border-danger';
+}
+
+var movieCard = '<div class="col-12 col-sm-6 col-md-3 mb-3 text-center">';
+  // movieCard += '<div class="movieThumb card '+genreClass+' " onclick="showMoreMovie()">';
+  movieCard += '<div class="movieThumb2 card '+genreClass+' " >';
+  movieCard += '<img src="images/'+movie.poster+'" class="card-img-top" alt="">';
+    movieCard += '<div class="card-body">';
+      movieCard += '<h5 class="card-title">'+movie.title+'</h5>';
+      // movieCard += '<p class="card-title">'+movie.year+'</p>';
+      // movieCard += '<p class="card-title"> Director(s): '+movie.directors+'</p>';
+      // movieCard += '<p class="card-title text-left">'+movie.bio+'</p>';
+      // movieCard += '<p class="card-title">'+movie.length+'min </p>';
+      // movieCard += '<p class="card-title"> Genre: '+movie.genre+'</p>';
+    movieCard += '</div>';
+  movieCard += '</div>';
+movieCard += '</div>';
+
 // console.log(movieCard);
-// moviesList.innerHTML += movieCard;
+moviesList.innerHTML += movieCard;
 
 // Way #3
-  var columns = document.createElement('div');
-  var columnsAttr = document.createAttribute('class');
-  columnsAttr.value = 'col-12 col-sm-6 col-md-4';
-  columns.setAttributeNode(columnsAttr);
-
-  var card = document.createElement('div');
-  var cardAttr = document.createAttribute('class');
-  cardAttr.value = 'card';
-  card.setAttributeNode(cardAttr);
-
-
-  var cardBody = document.createElement('div')
-  var cardBodyAttr =document.createAttribute('class')
-  cardBodyAttr.value = 'card-body';
-  cardBody.setAttributeNode(cardBodyAttr);
-
-  var cardTitle = document.createElement('h5')
-  var cardTitleAttr =document.createAttribute('class')
-  cardTitleAttr.value = 'card-title';
-  var cardTitleText = document.createTextNode(movie.title);
-
-  cardTitle.appendChild(cardTitleText);
-  cardBody.appendChild(cardTitle);
-  card.appendChild(cardBody);
-  columns.appendChild(card);
-
-  moviesList.appendChild(columns);
-
-
-
-
-
-
-
-
-
-
+  // var columns = document.createElement('div');
+  // var columnsAttr = document.createAttribute('class');
+  // columnsAttr.value = 'col-12 col-sm-6 col-md-4';
+  // columns.setAttributeNode(columnsAttr);
+  //
+  // var card = document.createElement('div');
+  // var cardAttr = document.createAttribute('class');
+  // cardAttr.value = 'card';
+  // card.setAttributeNode(cardAttr);
+  //
+  //
+  // var cardBody = document.createElement('div')
+  // var cardBodyAttr =document.createAttribute('class')
+  // cardBodyAttr.value = 'card-body';
+  // cardBody.setAttributeNode(cardBodyAttr);
+  //
+  // var cardTitle = document.createElement('h5')
+  // var cardTitleAttr =document.createAttribute('class')
+  // cardTitleAttr.value = 'card-title';
+  // var cardTitleText = document.createTextNode(movie.title);
+  //
+  // cardTitle.appendChild(cardTitleText);
+  // cardBody.appendChild(cardTitle);
+  // card.appendChild(cardBody);
+  // columns.appendChild(card);
+  //
+  // moviesList.appendChild(columns);
 
 }
+// POP UP MOVIE INFO
+
+function showMoreMovie(){
+    // console.log("you have clicked on a movie");
+    document.getElementById('moviePopUp').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+}
+
+var movieThumbnails = document.getElementsByClassName('movieThumb2');
+for (var i = 0; i < movieThumbnails.length; i++) {
+  // console.log(movieThumbnails[i]);
+  movieThumbnails[i].onclick = showMoreMovie;
+  // movieThumbnails[i].onclick = function(){ <---- second way
+  //   showMoreMovie();
+  // };
+}
+
+document.getElementById('close').onclick = function () {
+  document.getElementById('moviePopUp').style.display = 'none';
+  document.body.style.overflow = 'scroll';
+};

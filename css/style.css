@@ -1,3 +1,40 @@
-*{
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
 
+#close{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 10px;
+  color: #2c3e50;
+}
+
+#close:hover{
+  color: #bdc3c7;
+  cursor: pointer;
+}
+
+.movieThumb:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+body,html{
+  /* overflow: hidden; */
+}
+
+.overlayContent{
+  width: 80vw;
+  height: 70vh;
+  background-color: white;
+  position: relative;
 }
