@@ -76,9 +76,11 @@ if (movie.genre[0] === 'drama') {
   genreClass = 'border-danger';
 }
 
+
+
 var movieCard = '<div class="col-12 col-sm-6 col-md-3 mb-3 text-center">';
-  // movieCard += '<div class="movieThumb card '+genreClass+' " onclick="showMoreMovie()">';
-  movieCard += '<div class="movieThumb2 card '+genreClass+' " >';
+  movieCard += '<div class="movieThumb card '+genreClass+' " onclick="showMoreMovie('+movie.id+')">';
+  // movieCard += '<div class="movieThumb2 card '+genreClass+' " data-id="'+movie.id+'">';
   movieCard += '<img src="images/'+movie.poster+'" class="card-img-top" alt="">';
     movieCard += '<div class="card-body">';
       movieCard += '<h5 class="card-title">'+movie.title+'</h5>';
@@ -124,22 +126,52 @@ moviesList.innerHTML += movieCard;
   // moviesList.appendChild(columns);
 
 }
+// GENRE BADGE
+
+var genreBadge= '';
+if (movie.genre[0] === 'drama') {
+  genreBadge = '<span class="badge badge-primary">Drama</span>';
+} else{
+  genreBadge =  '<span class="badge badge-danger">Crime</span>';
+}
+
+
 // POP UP MOVIE INFO
 
-function showMoreMovie(){
+function showMoreMovie(movieNumber){
+  var singleMovie;
     // console.log("you have clicked on a movie");
+    console.log(movieNumber);
+    for (var i = 0; i < movies.length; i++) {
+
+      if (movies[i].id === movieNumber) {
+          console.log(movies[i]);
+          singleMovie = movies[i];
+          break;
+
+      }
+    }
+     console.log(singleMovie);
+     document.getElementById('posterImage').src = 'images/'+singleMovie.poster;
+     document.getElementById('movieTitle').innerText = singleMovie.title;
+     document.getElementById('movieYear').innerText = singleMovie.year;
+     document.getElementById('movieDirectors').innerHTML = "<li>"+singleMovie.directors+"</li>";
+     document.getElementById('movieBio').innerText = singleMovie.bio;
+     document.getElementById('movieLength').innerText = singleMovie.length;
+     document.getElementById('movieGenre').innerHTML += genreBadge;
+
     document.getElementById('moviePopUp').style.display = 'flex';
     document.body.style.overflow = 'hidden';
-
 }
 
 var movieThumbnails = document.getElementsByClassName('movieThumb2');
 for (var i = 0; i < movieThumbnails.length; i++) {
-  // console.log(movieThumbnails[i]);
-  movieThumbnails[i].onclick = showMoreMovie;
-  // movieThumbnails[i].onclick = function(){ <---- second way
-  //   showMoreMovie();
-  // };
+  var id = parseInt(movieThumbnails[i].dataset.id);
+  movieThumbnails[i].onclick = function(){
+    var id= parseInt(this.dataset.id);
+  // <---- second way
+    showMoreMovie(id);
+  };
 }
 
 document.getElementById('close').onclick = function () {
