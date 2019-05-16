@@ -5,7 +5,7 @@ var movies = [
     year: 1994,
     directors: ["Frank Darabont"],
     bio: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-    length: 142,
+    movieLength: 142,
     genre: ["drama"],
     poster: "shawshank.jpg"
   },
@@ -15,7 +15,7 @@ var movies = [
     year: 1972,
     directors: ["Francis Ford Coppola"],
     bio: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
-    length: 175,
+    movieLength: 175,
     genre: ["crime","drama"],
     poster: "thegodfather.jpg"
   },
@@ -25,7 +25,7 @@ var movies = [
     year: 2008,
     directors: ["Christopher Nolan"],
     bio:"When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
-    length: 152,
+    movieLength: 152,
     genre: ["drama"],
     poster: "thedarkknight.jpg"
   },
@@ -35,7 +35,7 @@ var movies = [
     year: 1993,
     directors: ["Steven Spielberg"],
     bio: "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis",
-    length: 195,
+    movieLength: 195,
     genre: ["drama"],
     poster: "schindlerslist.jpg"
   },
@@ -45,7 +45,7 @@ var movies = [
     year: 1994,
     directors: ["Quentin Tarantino"],
     bio:"The lives of two mob hitmen, a boxer, a gangster & his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
-    length:195,
+    movieLength:195,
     genre: ["crime"],
     poster: "pulpfiction.jpg"
   }
@@ -55,11 +55,11 @@ console.log(movies);
 var moviesList = document.getElementById('moviesList');
 
 for (var i = 0; i < movies.length; i++) {
-  // console.log(movies[i]);
   var movie = movies[i];
-  // console.log(movie.title);
 
-  // How to write it(text) into HTML
+
+  // How to write it(text) into HTML:
+
   // Way #1
   // document.getElementById("moviesList").innerHTML += "<p>"+movie.title+ "</p>"
 
@@ -69,31 +69,30 @@ for (var i = 0; i < movies.length; i++) {
   // moviesList.innerHTML +=  '</div>';
 
 // Way #2
-var genreClass= '';
-if (movie.genre[0] === 'drama') {
-  genreClass = 'border-primary';
-} else{
-  genreClass = 'border-danger';
-}
+var genreClass = getGenreColour(movie.genre[0]);
+// function colour(){
+//   var genreClass = validate(border-primary)
+// }
+// var genreClass= '';
+// if (movie.genre[0] === 'drama') {
+//   genreClass = 'border-primary';
+// } else{
+//   genreClass = 'border-danger';
+// }
 
 
 
 var movieCard = '<div class="col-12 col-sm-6 col-md-3 mb-3 text-center">';
-  movieCard += '<div class="movieThumb card '+genreClass+' " onclick="showMoreMovie('+movie.id+')">';
-  // movieCard += '<div class="movieThumb2 card '+genreClass+' " data-id="'+movie.id+'">';
+  movieCard += '<div class="movieThumb card h-100 border-'+genreClass+'"  " onclick="showMoreMovie('+movie.id+')">';
+  // movieCard += '<div class="movieThumb2 card h-100 '+genreClass+' " data-id="'+movie.id+'">';
   movieCard += '<img src="images/'+movie.poster+'" class="card-img-top" alt="">';
     movieCard += '<div class="card-body">';
       movieCard += '<h5 class="card-title">'+movie.title+'</h5>';
-      // movieCard += '<p class="card-title">'+movie.year+'</p>';
-      // movieCard += '<p class="card-title"> Director(s): '+movie.directors+'</p>';
-      // movieCard += '<p class="card-title text-left">'+movie.bio+'</p>';
-      // movieCard += '<p class="card-title">'+movie.length+'min </p>';
-      // movieCard += '<p class="card-title"> Genre: '+movie.genre+'</p>';
     movieCard += '</div>';
   movieCard += '</div>';
 movieCard += '</div>';
 
-// console.log(movieCard);
+
 moviesList.innerHTML += movieCard;
 
 // Way #3
@@ -106,7 +105,6 @@ moviesList.innerHTML += movieCard;
   // var cardAttr = document.createAttribute('class');
   // cardAttr.value = 'card';
   // card.setAttributeNode(cardAttr);
-  //
   //
   // var cardBody = document.createElement('div')
   // var cardBodyAttr =document.createAttribute('class')
@@ -125,14 +123,6 @@ moviesList.innerHTML += movieCard;
   //
   // moviesList.appendChild(columns);
 
-}
-// GENRE BADGE
-
-var genreBadge= '';
-if (movie.genre[0] === 'drama') {
-  genreBadge = '<span class="badge badge-primary">Drama</span>';
-} else{
-  genreBadge =  '<span class="badge badge-danger">Crime</span>';
 }
 
 
@@ -155,10 +145,26 @@ function showMoreMovie(movieNumber){
      document.getElementById('posterImage').src = 'images/'+singleMovie.poster;
      document.getElementById('movieTitle').innerText = singleMovie.title;
      document.getElementById('movieYear').innerText = singleMovie.year;
-     document.getElementById('movieDirectors').innerHTML = "<li>"+singleMovie.directors+"</li>";
+     document.getElementById('movieDirectors').innerHTML = '<li class="list-inline-item">'+singleMovie.directors+'</li>';
+     // ^ only for 1 director. Below for more than 1 director
+     // for (var i = 0; i < singleMovie.directors.length; i++) {
+     //   console.log(singleMovie.directors[i]);
+     //   document.getElementById('movieDirectors').innerHTML = '<li class="list-inline-item">' +singleMovie.directors[i]+"</li>";
+     // }
+
      document.getElementById('movieBio').innerText = singleMovie.bio;
-     document.getElementById('movieLength').innerText = singleMovie.length;
-     document.getElementById('movieGenre').innerHTML += genreBadge;
+     document.getElementById('movieLength').innerText = singleMovie.movieLength;
+     document.getElementById('movieGenre').innerHTML = '';
+
+     for (var i = 0; i < singleMovie.genre.length; i++) {
+       var genreColour = getGenreColour(singleMovie.genre[i]);
+       // if (singleMovie.genre[i] === 'drama'){
+       //   genreColour = 'badge-primary';
+       // } else {
+       //   genreColour = 'badge-danger';
+       // }
+       document.getElementById('movieGenre').innerHTML += '<span class= "badge badge-'+genreColour+' mr-1">'+singleMovie.genre[i]+'</span>';
+     }
 
     document.getElementById('moviePopUp').style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -178,3 +184,13 @@ document.getElementById('close').onclick = function () {
   document.getElementById('moviePopUp').style.display = 'none';
   document.body.style.overflow = 'scroll';
 };
+
+// COLOUR DEFINER FUNCTION
+
+function getGenreColour(genre){
+  if (genre === 'drama') {
+    return  'primary';
+  } else{
+    return  'danger';
+  }
+}

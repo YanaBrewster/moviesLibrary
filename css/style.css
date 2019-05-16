@@ -25,7 +25,12 @@
   cursor: pointer;
 }
 
-.movieThumb2:hover{
+/* .movieThumb2:hover{
+  opacity: 0.5;
+  cursor: pointer;
+} */
+
+.movieThumb:hover{
   opacity: 0.5;
   cursor: pointer;
 }
@@ -36,7 +41,12 @@ body,html{
 
 .overlayContent{
   width: 80vw;
+  max-height: 70vh;
   height: 70vh;
   background-color: white;
   position: relative;
+}
+
+#posterImage{
+  max-height: 100%;
 }
