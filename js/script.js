@@ -48,7 +48,78 @@ var movies = [
     movieLength:195,
     genre: ["crime"],
     poster: "pulpfiction.jpg"
-  }
+  },
+  {
+    id: 6,
+    title: "Fight Club",
+    year: 1999,
+    directors: ["David Fincher"],
+    bio:"An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.",
+    movieLength:139,
+    genre: ["drama"],
+    poster: "fightclub.jpg"
+  },
+  {
+    id: 7,
+    title: "Forrest Gump",
+    year: 1994,
+    directors: ["Robert Zemeckis"],
+    bio:"The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other history unfold through the perspective of an Alabama man with an IQ of 75.",
+    movieLength:142,
+    genre: ["drama"],
+    poster: "forrestgump.jpg"
+  },
+  {
+    id: 8,
+    title: "The Lord of the Rings: The Fellowship of the Ring ",
+    year: 2001,
+    directors: ["Peter Jackson"],
+    bio:"A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+    movieLength:178,
+    genre: ["adventure", "drama"],
+    poster: "lotr1.jpg"
+  },
+  {
+    id: 9,
+    title: "The Good, the Bad and the Ugly",
+    year: 1966,
+    directors: ["Sergio Leone"],
+    bio:"A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.",
+    movieLength: 161,
+    genre: ["western"],
+    poster: "thegoodthebadtheugly.jpg"
+  },
+  {
+    id: 10,
+    title: "The Lord of the Rings: The Return of the King ",
+    year: 2003,
+    directors: ["Peter Jackson"],
+    bio:"Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+    movieLength:201,
+    genre: ["adventure", "drama"],
+    poster: "lotr3.jpg"
+  },
+  {
+    id: 11,
+    title: "12 Angry Men",
+    year: 1957,
+    directors: ["Sidney Lumet"],
+    bio:"A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider the evidence.",
+    movieLength:96,
+    genre: ["drama"],
+    poster: "12angrymen.jpg"
+  },
+  {
+    id: 12,
+    title: "The Godfather: Part II",
+    year: 1974,
+    directors: ["Francis Ford Coppola"],
+    bio:"The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.",
+    movieLength:202,
+    genre: ["crime"],
+    poster: "thegodfather2.jpg"
+  },
+
 ]
 
 console.log(movies);
@@ -190,7 +261,13 @@ document.getElementById('close').onclick = function () {
 function getGenreColour(genre){
   if (genre === 'drama') {
     return  'primary';
+  } else if (genre === 'crime'){
+    return 'danger';
+  }else if (genre === 'adventure'){
+    return 'success';
+  } else if(genre === 'western'){
+    return 'warning';
   } else{
-    return  'danger';
+    return  'dark';
   }
 }
