@@ -2,7 +2,9 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Movie Library</title>
+
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -13,18 +15,21 @@
         <div class="col">
             <h1 class="display-3 text-center">Movies Library</h1>
         </div>
-          </div>
-          <div id="moviesList" class="row"></div>
+     </div>
+     <div id="moviesList" class="row"></div>
+           <div class="row">
+               <div class="col">
+                   <nav>
+                       <ul id="paginationMovies" class="pagination justify-content-end">
+                           <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
+                       </ul>
+                   </nav>
+               </div>
+           </div>
     </div>
 
-
-
-
-
-
-
     <div id="moviePopUp" class="overlay">
-      <div class="overlayContent rounded">
+      <div class="overlayContent rounded pr-2">
           <div class="row h-100">
               <div class="col-4 h-100">
                   <img id="posterImage" longdesc=""src="" class="h-100 img-fluid rounded-left" alt="">
@@ -32,7 +37,7 @@
 
               <div class="col-8">
 
-                  <h2 id="movieTitle" class="display-4 text-left mt-2"></h2>
+                  <h2 id="movieTitle" class="display-4 text-left mt-4"></h2>
                   <p id="movieYear"> </p>
                   <p>Directors:</p>
                   <ul id="movieDirectors">
@@ -52,8 +57,11 @@
 
     </div>
 
+
+
     <script src="js/jquery-3.4.1.min.js"> </script>
     <script type="text/javascript" src="js/bootstrap.js"> </script>
     <script type="text/javascript" src="js/script.js"></script>
+      <script type="text/javascript" src="js/pagination.js"></script>
   </body>
 </html>
