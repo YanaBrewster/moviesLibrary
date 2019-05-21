@@ -122,6 +122,7 @@ var movies = [
 
 ]
 
+
 var maxNumberOnScreen = 8;
 var numberOfPages = Math.ceil(movies.length / maxNumberOnScreen);
 
@@ -154,9 +155,81 @@ function showMovieThumbnails(start, end){
     }
 }
 
-// for (var i = 8 * x; i < 8 * (x + 1); i++) {
-//
-// }
+// POP UP MOVIE INFO
+
+function showMoreMovie(movieNumber){
+  var singleMovie;
+    // console.log("you have clicked on a movie");
+    console.log(movieNumber);
+    for (var i = 0; i < movies.length; i++) {
+
+      if (movies[i].id === movieNumber) {
+          console.log(movies[i]);
+          singleMovie = movies[i];
+          break;
+
+      }
+    }
+     console.log(singleMovie);
+     document.getElementById('posterImage').src = 'images/'+singleMovie.poster;
+     document.getElementById('movieTitle').innerText = singleMovie.title;
+     document.getElementById('movieYear').innerText = singleMovie.year;
+     document.getElementById('movieDirectors').innerHTML = '<li class="list-inline-item">'+singleMovie.directors+'</li>';
+     // ^ only for 1 director. Below for more than 1 director
+     // for (var i = 0; i < singleMovie.directors.length; i++) {
+     //   console.log(singleMovie.directors[i]);
+     //   document.getElementById('movieDirectors').innerHTML = '<li class="list-inline-item">' +singleMovie.directors[i]+"</li>";
+     // }
+
+     document.getElementById('movieBio').innerText = singleMovie.bio;
+     document.getElementById('movieLength').innerText = singleMovie.movieLength;
+     document.getElementById('movieGenre').innerHTML = '';
+
+     for (var i = 0; i < singleMovie.genre.length; i++) {
+       var genreColour = getGenreColour(singleMovie.genre[i]);
+       // if (singleMovie.genre[i] === 'drama'){
+       //   genreColour = 'badge-primary';
+       // } else {
+       //   genreColour = 'badge-danger';
+       // }
+       document.getElementById('movieGenre').innerHTML += '<span class= "badge badge-'+genreColour+' mr-1">'+singleMovie.genre[i]+'</span>';
+     }
+
+    document.getElementById('moviePopUp').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+var movieThumbnails = document.getElementsByClassName('movieThumb2');
+for (var i = 0; i < movieThumbnails.length; i++) {
+  var id = parseInt(movieThumbnails[i].dataset.id);
+  movieThumbnails[i].onclick = function(){
+    var id= parseInt(this.dataset.id);
+  // <---- second way
+    showMoreMovie(id);
+  };
+}
+
+document.getElementById('close').onclick = function () {
+  document.getElementById('moviePopUp').style.display = 'none';
+  document.body.style.overflow = 'scroll';
+};
+
+// COLOUR DEFINER FUNCTION
+
+function getGenreColour(genre){
+  if (genre === 'drama') {
+    return  'primary';
+  } else if (genre === 'crime'){
+    return 'danger';
+  }else if (genre === 'adventure'){
+    return 'success';
+  } else if(genre === 'western'){
+    return 'warning';
+  } else{
+    return  'dark';
+  }
+}
+
 
 if (numberOfPages > 1) {
   var pagination = document.getElementById('paginationMovies');
