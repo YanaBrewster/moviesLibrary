@@ -123,7 +123,7 @@ var movies = [
 ]
 
 
-var maxNumberOnScreen = 8;
+var maxNumberOnScreen = 4;
 var numberOfPages = Math.ceil(movies.length / maxNumberOnScreen);
 
 // var x = 0;
@@ -137,8 +137,10 @@ if(maxNumberOnScreen > movies.length){
 
 
 function showMovieThumbnails(start, end){
-    console.log(start);
-    console.log(end);
+  document.getElementById('moviesList').innerHTML = "";
+  // console.log("clicked on page" + (end /4));
+  // console.log(start);
+  // console.log(end);
     for (var i = start; i < end; i++) {
       var movie = movies[i];
 
@@ -154,6 +156,17 @@ function showMovieThumbnails(start, end){
         document.getElementById('moviesList').innerHTML += movieCard;
     }
 }
+
+
+if(numberOfPages > 1){
+    var pagination = document.getElementById('paginationMovies');
+    for (var i = 0; i < numberOfPages; i++) {
+        pagination.innerHTML += '<li class="page-item"><a onclick="showMovieThumbnails('+(maxNumberOnScreen * i)+', '+(maxNumberOnScreen * (i+1))+')" class="page-link" href="#">'+(i+1)+'</a></li>';
+
+    }
+}
+
+// p2 start 8 end 11
 
 // POP UP MOVIE INFO
 
@@ -227,13 +240,5 @@ function getGenreColour(genre){
     return 'warning';
   } else{
     return  'dark';
-  }
-}
-
-
-if (numberOfPages > 1) {
-  var pagination = document.getElementById('paginationMovies');
-  for (var i = 0; i < numberOfPages; i++) {
-    pagination.innerHTML += '<li class="page-item" data-x="0" onclick="pageContent();"><a class="page-link" href="#">'+(i+1)+'</a></li>';
   }
 }
