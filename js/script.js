@@ -1,3 +1,5 @@
+// Notes throughout script
+
 var movies = [
   {
     id: 1,

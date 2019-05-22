@@ -1,3 +1,5 @@
+// MOVIES DATABASE AS AN OBJECT
+
 var movies = [
   {
     id: 1,
@@ -121,111 +123,28 @@ var movies = [
   },
 
 ]
+// COMPUTER READS THE DATABASE
 
+var moviesList = document.getElementById('moviesList');
+for (var i = 0; i < movies.length; i++) {
+}
+
+//  MOVIES[i] IS RENAMED FOR EASIER CODING
+var movie = movies[i];
+
+
+// SETTING MOVIES TO DISPLAY ONLOAD
 
 var maxNumberOnScreen = 4;
 var numberOfPages = Math.ceil(movies.length / maxNumberOnScreen);
+var currentTab = 'Movies';
 
-// var x = 0;
+
 if(maxNumberOnScreen > movies.length){
-    // console.log("There are not enough movies in the database to fill the entire screen");
     showMovieThumbnails(0, movies.length);
 } else {
-    // console.log("there is more movies than the max on screen");
     showMovieThumbnails(0, maxNumberOnScreen);
 }
-
-
-function showMovieThumbnails(start, end){
-  document.getElementById('moviesList').innerHTML = "";
-  // console.log("clicked on page" + (end /4));
-  // console.log(start);
-  // console.log(end);
-    for (var i = start; i < end; i++) {
-      var movie = movies[i];
-
-        var movieCard = '<div class="col-12 col-sm-6 col-md-3 mb-3 text-center">';
-            movieCard += '<div class="movieThumb movieThumb2 card h-100" data-id="'+movie.id+'">';
-                movieCard += '<img src="images/'+movie.poster+'" class="card-img-top" alt="">';
-                movieCard += '<div class="card-body">';
-                    movieCard += '<h5 class="card-title">'+movie.title+'</h5>';
-                movieCard += '</div>';
-            movieCard += '</div>';
-        movieCard += '</div>';
-
-        document.getElementById('moviesList').innerHTML += movieCard;
-    }
-}
-
-
-if(numberOfPages > 1){
-    var pagination = document.getElementById('paginationMovies');
-    for (var i = 0; i < numberOfPages; i++) {
-        pagination.innerHTML += '<li class="page-item"><a onclick="showMovieThumbnails('+(maxNumberOnScreen * i)+', '+(maxNumberOnScreen * (i+1))+')" class="page-link" href="#">'+(i+1)+'</a></li>';
-
-    }
-}
-
-// p2 start 8 end 11
-
-// POP UP MOVIE INFO
-
-function showMoreMovie(movieNumber){
-  var singleMovie;
-    // console.log("you have clicked on a movie");
-    console.log(movieNumber);
-    for (var i = 0; i < movies.length; i++) {
-
-      if (movies[i].id === movieNumber) {
-          console.log(movies[i]);
-          singleMovie = movies[i];
-          break;
-
-      }
-    }
-     console.log(singleMovie);
-     document.getElementById('posterImage').src = 'images/'+singleMovie.poster;
-     document.getElementById('movieTitle').innerText = singleMovie.title;
-     document.getElementById('movieYear').innerText = singleMovie.year;
-     document.getElementById('movieDirectors').innerHTML = '<li class="list-inline-item">'+singleMovie.directors+'</li>';
-     // ^ only for 1 director. Below for more than 1 director
-     // for (var i = 0; i < singleMovie.directors.length; i++) {
-     //   console.log(singleMovie.directors[i]);
-     //   document.getElementById('movieDirectors').innerHTML = '<li class="list-inline-item">' +singleMovie.directors[i]+"</li>";
-     // }
-
-     document.getElementById('movieBio').innerText = singleMovie.bio;
-     document.getElementById('movieLength').innerText = singleMovie.movieLength;
-     document.getElementById('movieGenre').innerHTML = '';
-
-     for (var i = 0; i < singleMovie.genre.length; i++) {
-       var genreColour = getGenreColour(singleMovie.genre[i]);
-       // if (singleMovie.genre[i] === 'drama'){
-       //   genreColour = 'badge-primary';
-       // } else {
-       //   genreColour = 'badge-danger';
-       // }
-       document.getElementById('movieGenre').innerHTML += '<span class= "badge badge-'+genreColour+' mr-1">'+singleMovie.genre[i]+'</span>';
-     }
-
-    document.getElementById('moviePopUp').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-var movieThumbnails = document.getElementsByClassName('movieThumb2');
-for (var i = 0; i < movieThumbnails.length; i++) {
-  var id = parseInt(movieThumbnails[i].dataset.id);
-  movieThumbnails[i].onclick = function(){
-    var id= parseInt(this.dataset.id);
-  // <---- second way
-    showMoreMovie(id);
-  };
-}
-
-document.getElementById('close').onclick = function () {
-  document.getElementById('moviePopUp').style.display = 'none';
-  document.body.style.overflow = 'scroll';
-};
 
 // COLOUR DEFINER FUNCTION
 
@@ -241,4 +160,110 @@ function getGenreColour(genre){
   } else{
     return  'dark';
   }
+}
+
+
+// DISPLAY MOVIES FUNCTION (ONLOAD)
+
+function showMovieThumbnails(start, end){
+  document.getElementById('moviesList').innerHTML = "";
+    for (var i = start; i < end; i++) {
+      var movie = movies[i];
+      var genreClass = getGenreColour(movie.genre[0]);
+
+        var movieCard = '<div class="col-12 col-sm-6 col-md-3 mb-3 text-center">';
+            movieCard += '<div class="movieThumb movieThumb2 card border-'+genreClass+' h-100" data-id="'+movie.id+'">';
+                movieCard += '<img src="images/'+movie.poster+'" class="card-img-top" alt="">';
+                movieCard += '<div class="card-body">';
+                    movieCard += '<h5 class="card-title">'+movie.title+'</h5>';
+                movieCard += '</div>';
+            movieCard += '</div>';
+        movieCard += '</div>';
+
+        document.getElementById('moviesList').innerHTML += movieCard;
+    }
+    var movieThumbnails = document.getElementsByClassName('movieThumb2');
+    for (var i = 0; i < movieThumbnails.length; i++) {
+      var id = parseInt(movieThumbnails[i].dataset.id);
+      movieThumbnails[i].onclick = function(){
+        var id= parseInt(this.dataset.id);
+        showMoreMovie(id);
+      };
+    }
+}
+
+// PAGINATION (NOT ONLOAD)
+
+if(numberOfPages > 1){
+    var pagination = document.getElementById('paginationMovies');
+    for (var i = 0; i < numberOfPages; i++) {
+        pagination.innerHTML += '<li class="page-item"><a onclick="showMovieThumbnails('+(maxNumberOnScreen * i)+', '+(maxNumberOnScreen * (i+1))+')" class="page-link" href="#">'+(i+1)+'</a></li>';
+    }
+}
+
+// POP UP MOVIE INFO FUNCTION
+
+function showMoreMovie(movieNumber){
+  var singleMovie;
+    console.log(movieNumber);
+    for (var i = 0; i < movies.length; i++) {
+
+      if (movies[i].id === movieNumber) {
+          console.log(movies[i]);
+          singleMovie = movies[i];
+          break;
+
+      }
+    }
+
+     document.getElementById('posterImage').src = 'images/'+singleMovie.poster;
+     document.getElementById('movieTitle').innerText = singleMovie.title;
+     document.getElementById('movieYear').innerText = singleMovie.year;
+     document.getElementById('movieDirectors').innerHTML = '<li class="list-inline-item">'+singleMovie.directors+'</li>';
+     document.getElementById('movieBio').innerText = singleMovie.bio;
+     document.getElementById('movieLength').innerText = singleMovie.movieLength;
+     document.getElementById('movieGenre').innerHTML = '';
+
+     for (var i = 0; i < singleMovie.genre.length; i++) {
+       var genreColour = getGenreColour(singleMovie.genre[i]);
+       document.getElementById('movieGenre').innerHTML += '<span class= "badge badge-'+genreColour+' mr-1">'+singleMovie.genre[i]+'</span>';
+     }
+
+    document.getElementById('moviePopUp').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+
+// CLOSE WINDOW AND DISABLE SCROLL
+
+document.getElementById('close').onclick = function () {
+  document.getElementById('moviePopUp').style.display = 'none';
+  document.body.style.overflow = 'scroll';
+};
+
+// PAGE TABS - CHANGING TO ACTIVE
+
+var pageTabs = document.getElementsByClassName('page-tab');
+for (var i = 0; i < pageTabs.length; i++) {
+    pageTabs[i].onclick = function(){
+        for (var j = 0; j < pageTabs.length; j++) {
+          if (pageTabs[j].classList.contains('active'));{
+                pageTabs[j].classList.remove('active');
+                break;
+            }
+      }
+      if(!this.classList.contains('active')) {
+        this.classList.add('active');
+      }
+      changeTab(this.innerText);
+    };
+}
+
+function changeTab(tabName){
+    if(currentTab === tabName){
+        console.log('you are still on the same page');
+    } else {
+        currentTab = tabName;
+        console.log('Change to the ' + tabName + ' page')
+    }
 }
